@@ -1,0 +1,40 @@
+@startuml
+skinparam componentStyle uml2
+
+package "Presentation Layer" {
+    [EmailClient.Console] as Console
+}
+
+package "Application Layer" {
+    [EmailClient.Application] as App
+}
+
+package "Infrastructure Layer" {
+    [EmailClient.Infrastructure] as Infra
+}
+
+package "Core Layer (Domain)" {
+    [EmailClient.Core] as Core
+}
+
+Console ..> App : Uses
+Console ..> Infra : Registers Services
+Console ..> Core : Uses Models
+
+App ..> Core : Uses Interfaces\n& Models
+Infra ..> Core : Implements Interfaces
+
+note right of Core
+  Contains:
+  - IEmailService
+  - IEmailStorage
+  - EmailMessage
+end note
+
+note right of Infra
+  Contains:
+  - MailKitEmailService
+  - JsonEmailStorage
+end note
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+participant Program
+participant HostBuilder
+participant "ServiceCollection" as SC
+participant "ServiceCollectionExtensions" as Ext
+
+Program -> HostBuilder : CreateDefaultBuilder()
+HostBuilder -> SC : ConfigureServices()
+
+activate SC
+    SC -> Ext : AddInfrastructureServices()
+    activate Ext
+        Ext -> SC : AddScoped<IEmailService, MailKitEmailService>()
+        Ext -> SC : AddScoped<IEmailStorage, JsonEmailStorage>()
+    deactivate Ext
+
+    SC -> SC : AddScoped<EmailFilterService>()
+    SC -> SC : AddScoped<AttachmentService>()
+    SC -> SC : AddHostedService<EmailClientHostedService>()
+deactivate SC
+
+Program -> HostBuilder : Build()
+Program -> "IHost" : RunAsync()
+@enduml

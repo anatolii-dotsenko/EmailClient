@@ -1,0 +1,32 @@
+@startuml
+interface ICommand {
+    + {abstract} Name : string
+    + {abstract} Description : string
+    + {abstract} ExecuteAsync() : Task
+}
+
+abstract class BaseCommand {
+    + {abstract} Name : string
+    + {abstract} Description : string
+    + ExecuteAsync() : Task
+    # Validate() : bool
+    # LogError(message: string) : void
+    # LogSuccess(message: string) : void
+}
+
+class EmailClientHostedService {
+    - _emailService : IEmailService
+    - _emailStorage : IEmailStorage
+    - _filterService : EmailFilterService
+    + StartAsync(cancellationToken: CancellationToken) : Task
+    - ShowMenu() : void
+}
+
+ICommand <|.. BaseCommand
+note bottom of BaseCommand
+  Базовий клас для реалізації
+  конкретних команд консолі
+end note
+
+EmailClientHostedService ..> ICommand : Potential usage
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+package "EmailClient.Core" {
+    interface IEmailService {
+        + ConnectAsync(email, password)
+        + GetEmailsAsync(count)
+        + SendEmailAsync(to, subject, body)
+        + Disconnect()
+    }
+
+    interface IEmailStorage {
+        + SaveAsync(email)
+        + LoadAllAsync()
+        + DeleteAsync(emailId)
+    }
+}
+
+package "EmailClient.Infrastructure" {
+    class MailKitEmailService {
+        - _imapClient : ImapClient
+        - _smtpClient : SmtpClient
+        + ConnectAsync()
+        + GetEmailsAsync()
+        + SendEmailAsync()
+    }
+
+    class JsonEmailStorage {
+        - _filePath : string
+        - _emails : List<EmailMessage>
+        + SaveAsync()
+        + LoadAllAsync()
+    }
+}
+
+IEmailService <|.. MailKitEmailService
+IEmailStorage <|.. JsonEmailStorage
+
+note right of MailKitEmailService
+  Використовує бібліотеку MailKit
+  для протоколів IMAP/SMTP
+end note
+
+note right of JsonEmailStorage
+  Зберігає листи у локальний
+  файл emails.json
+end note
+@enduml
