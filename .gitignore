@@ -1,19 +1,310 @@
-## Ignore Visual Studio temporary files, build results, and user-specific files
-[Bb]in/
-[Oo]bj/
-*.opendb
-*.safetensors
+# .NET Core build and project files
+**/[Bb]in/
+**/[Oo]bj/
+**/packages/
+**/.vs/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
 
-## Ignore Visual Studio user specific files
-*.suo
-*.user
-*.usercode
+# Rider IDE
+**/.idea/
+**/*.sln.iml
+**/.idea_modules/
+**/*.DotSettings.user
+
+# Visual Studio Code
+**/.vscode/
+**/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# User-specific files
 *.userprefs
+*.csproj.user
+*.rsuser
 
-## Ignore Visual Studio options files
-.vs/
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
 
-## Ignore NuGet packages and caches
-.nuget/
-packages/
+# NuGet Packages
 *.nupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# Logs and diagnostics
+**/logs/
+**/Logs/
+*.log
+*.log.*
+*.tlog
+*.diag
+*.diag.*
+
+# Build results
+**/x64/
+**/x86/
+**/[Aa][Rr][Mm]/
+**/[Aa][Rr][Mm]64/
+**/bld/
+**/[Bb]in/[Oo]bj/
+*.cache
+
+# Local History for Visual Studio
+**/.history/
+
+# Backup folder for Package Reference Convert tool
+**/_UpgradeReport_Files/
+
+# Visual Studio cache directory
+**/.vs/
+
+# CodeRush
+**/.cr/
+
+# Python Tools for Visual Studio (PTVS)
+**/__pycache__/
+*.pyc
+
+# Cake - Uncomment if you are using it
+# tools/
+
+# Telerik's JustMock configuration file
+**/*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+**/OpenCover/
+
+# Azure Stream Analytics local run output
+**/ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+**.mfractor/
+
+# Local File for UI Test Records
+**/*AppUITests.[Rr]ecorder.[Rr]esults.[Xx]ml
+
+# BeatPulse healthcheck temp database
+healthchecksdb
+
+# Built Visual Studio extension files
+**/*.vsix
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,macos,jetbrains+resharper,jetbrains+rider
+
+# Project-specific files
+emails.json
+attachments/
+appsettings.Development.json
+appsettings.Local.json
+
+# Secrets and sensitive data
+**/secrets.json
+**/*.secret
+**/appsettings.*.json
+!appsettings.json
+!appsettings.Example.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.dylib
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Performance logs
+*.pid
+*.pidb
+
+# Roslyn cache
+*.ide/
+
+# ReSharper cache
+_ReSharper.*/
+*.resharper
+
+# DotCover
+**/.dotCover/
+
+# NCrunch
+**/.ncrunch*
+_NCrunch_*
+*.ncrunchproject
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# Business Intelligence projects
+**/*.bim.layout
+**/*.bim_*.settings
+
+# Microsoft Fakes
+FakesAssemblies/
+
+# GhostDoc plugin setting file
+*.GhostDoc.xml
+
+# Node.js Tools for Visual Studio
+**.ntvs_analysis.dat
+**/node_modules/
+
+# Visual Studio 6 build log
+*.plg
+
+# Visual Studio 6 workspace options file
+*.opt
+
+# Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
+*.vbw
+
+# Visual Studio LightSwitch build output
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+
+# Paket dependency manager
+.paket/paket.exe
+paket-files/
+
+# FAKE - F# Make
+.fake/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# CodeRush personal settings
+.cr/personal
+
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+# Cake - Uncomment if you are using it
+# tools/
+
+# Tabs Studio
+*.tss
+
+# Telerik's JustMock configuration file
+*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+.mfractor/
+
+# Local File for UI Test Records
+*AppUITests.[Rr]ecorder.[Rr]esults.[Xx]ml
+
+# BeatPulse healthcheck temp database
+healthchecksdb
+
+# Built Visual Studio extension files
+*.vsix
+
+# Mac files
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,macos,jetbrains+resharper,jetbrains+rider
+
+# Email Client specific
+*.eml.backup
+email-backup/
+*.pst
+*.ost
+mail-cache/
