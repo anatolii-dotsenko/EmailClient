@@ -19,16 +19,13 @@ A .NET 8 console email client built with MailKit, following SOLID principles and
 2. Generate an app password: Google Account → Security → App passwords
 3. Build and run the application
 
-## Building and Running
+## Running
 ```bash
-# Restore dependencies
-dotnet restore
+# Make it executable
+chmod +x run.sh
 
-# Build the solution
-dotnet build
-
-# Run the application
-dotnet run
+# Run it
+./run.sh
 ```
 
 ## Usage
