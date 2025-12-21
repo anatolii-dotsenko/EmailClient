@@ -10,13 +10,8 @@ class EmailReceiver:
         socket.setdefaulttimeout(5)
 
         try:
-            # connect to pop3 server without ssl
             server = poplib.POP3(POP3_HOST, POP3_PORT)
-
-            # upgrade connection to tls
             server.stls()
-
-            # authenticate user
             server.user(POP3_USER)
             server.pass_(POP3_PASSWORD)
 
@@ -28,9 +23,23 @@ class EmailReceiver:
                 msg_content = b"\n".join(lines)
                 msg = BytesParser(policy=default).parsebytes(msg_content)
 
+                # extract plain text body
+                body = ""
+
+                if msg.is_multipart():
+                    for part in msg.walk():
+                        content_type = part.get_content_type()
+                        if content_type == "text/plain":
+                            body = part.get_content()
+                            break
+                else:
+                    body = msg.get_content()
+
                 emails.append({
                     "from": msg["from"],
+                    "to": msg["to"],
                     "subject": msg["subject"],
+                    "body": body.strip(),
                     "has_attachments": msg.is_multipart()
                 })
 
