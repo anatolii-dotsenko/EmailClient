@@ -1,0 +1,19 @@
+## Ignore Visual Studio temporary files, build results, and user-specific files
+[Bb]in/
+[Oo]bj/
+*.opendb
+*.safetensors
+
+## Ignore Visual Studio user specific files
+*.suo
+*.user
+*.usercode
+*.userprefs
+
+## Ignore Visual Studio options files
+.vs/
+
+## Ignore NuGet packages and caches
+.nuget/
+packages/
+*.nupkg
