@@ -4,9 +4,6 @@ using EmailClient.Core.Models;
 
 namespace EmailClient.Infrastructure.Repositories;
 
-/// <summary>
-/// JSON-based email storage implementation.
-/// </summary>
 public class JsonEmailStorage : IEmailStorage
 {
     private readonly string _filePath;
@@ -14,69 +11,72 @@ public class JsonEmailStorage : IEmailStorage
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly object _lock = new();
 
-    public JsonEmailStorage()
+    // constructor with parameter for tests
+    public JsonEmailStorage(string filePath = "emails.json")
     {
-        _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "emails.json");
-        _emails = new List<EmailMessage>();
+        _filePath = filePath;
         _jsonOptions = new JsonSerializerOptions { WriteIndented = true };
-        
-        LoadFromFile();
-    }
-
-    private void LoadFromFile()
-    {
-        if (!File.Exists(_filePath))
-            return;
-
-        try
-        {
-            lock (_lock)
-            {
-                var json = File.ReadAllText(_filePath);
-                var loaded = JsonSerializer.Deserialize<List<EmailMessage>>(json, _jsonOptions);
-                if (loaded != null)
-                    _emails.AddRange(loaded);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed to load emails from JSON: {ex.Message}");
-        }
-    }
-
-    private void SaveToFile()
-    {
-        try
-        {
-            lock (_lock)
-            {
-                var json = JsonSerializer.Serialize(_emails, _jsonOptions);
-                File.WriteAllText(_filePath, json);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed to save emails to JSON: {ex.Message}");
-        }
+        _emails = LoadFromFile();
     }
 
     public Task SaveAsync(EmailMessage email)
     {
-        _emails.RemoveAll(e => e.Id == email.Id);
-        _emails.Add(email);
-        SaveToFile();
+        lock (_lock)
+        {
+            // remove the old version of the email if it exists to update it
+            _emails.RemoveAll(e => e.Id == email.Id);
+            _emails.Add(email);
+            SaveToFile();
+        }
         return Task.CompletedTask;
     }
 
     public Task<List<EmailMessage>> LoadAllAsync()
     {
-        return Task.FromResult(new List<EmailMessage>(_emails));
+        lock (_lock)
+        {
+            // return a copy of the list
+            return Task.FromResult(new List<EmailMessage>(_emails));
+        }
     }
 
+    // implementation of the delete method required by the interface
     public Task DeleteAsync(string emailId)
     {
-        _emails.RemoveAll(e => e.Id == emailId);
-        SaveToFile();
+        lock (_lock)
+        {
+            _emails.RemoveAll(e => e.Id == emailId);
+            SaveToFile();
+        }
         return Task.CompletedTask;
+    }
+
+    private void SaveToFile()
+    {
+        try 
+        {
+            var json = JsonSerializer.Serialize(_emails, _jsonOptions);
+            File.WriteAllText(_filePath, json);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving emails: {ex.Message}");
+        }
+    }
+
+    private List<EmailMessage> LoadFromFile()
+    {
+        if (!File.Exists(_filePath))
+            return new List<EmailMessage>();
+
+        try
+        {
+            var json = File.ReadAllText(_filePath);
+            return JsonSerializer.Deserialize<List<EmailMessage>>(json, _jsonOptions) ?? new List<EmailMessage>();
+        }
+        catch
+        {
+            return new List<EmailMessage>();
+        }
     }
 }
