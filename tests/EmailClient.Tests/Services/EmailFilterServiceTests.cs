@@ -18,19 +18,19 @@ namespace EmailClient.Tests.Services
         [Fact]
         public void FilterBySubject_ShouldReturnMatchingEmails_WhenKeywordExists()
         {
-            // Arrange (Підготовка)
+            // Arrange
             var emails = new List<EmailMessage>
             {
-                new EmailMessage { Subject = "Optima Practice", From = "tutor@optima.edu" },
+                new EmailMessage { Subject = "Optima Practice", From = "tutor@optima-osvita.org" },
                 new EmailMessage { Subject = "Discount", From = "shop@store.com" },
-                new EmailMessage { Subject = "Practice Report", From = "student@optima.edu" }
+                new EmailMessage { Subject = "Practice Report", From = "student@optima-osvita.org" }
             };
             string keyword = "Practice";
 
-            // Act (Дія)
+            // Act
             var result = _filterService.FilterBySubject(emails, keyword);
 
-            // Assert (Перевірка)
+            // Assert
             Assert.Equal(2, result.Count);
             Assert.Contains(result, e => e.Subject == "Optima Practice");
             Assert.Contains(result, e => e.Subject == "Practice Report");
